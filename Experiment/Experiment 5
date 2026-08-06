@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart Calculator_233</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f7f5f0; 
+        }
+        .card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(92, 64, 51, 0.1); 
+            border: 1px solid #e8e3d9;
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-top: 0;
+            color: #4a3728; 
+            border-bottom: 2px solid #d7ccc8; 
+            padding-bottom: 10px;
+        }
+        .form-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        input, button {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #d7ccc8;
+            font-size: 1em;
+        }
+        input[type="text"] {
+            flex: 2;
+            min-width: 150px;
+        }
+        input[type="number"] {
+            flex: 1;
+            min-width: 80px;
+        }
+        button {
+            background-color: #6d4c41;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #4a3728;
+        }
+        .item-list {
+            margin-bottom: 15px;
+        }
+        .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            color: #5c4033; 
+            border-bottom: 1px dashed #efebe9;
+        }
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            margin: 12px 0;
+            font-size: 1.05em;
+            color: #6d4c41; 
+        }
+        .discount {
+            color: #a1887f; 
+            font-weight: bold;
+            background-color: #efebe9;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+        .total {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #3e2723; 
+            border-top: 2px solid #d7ccc8;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Input Form Card -->
+<div class="card">
+    <h2>Add Item</h2>
+    <div class="form-group">
+        <input type="text" id="itemName" placeholder="Item Name (e.g., Coffee)">
+        <input type="number" id="itemPrice" placeholder="Price (₹)" min="0" step="0.01">
+        <input type="number" id="itemQty" placeholder="Qty" min="1" value="1">
+        <button onclick="addItem()">Add to Cart</button>
+    </div>
+</div>
+
+<!-- Display Summary Card -->
+<div class="card">
+    <h2>Your Cart</h2>
+    <div id="itemList" class="item-list"></div>
+    
+    <div class="summary-line">
+        <span>Subtotal:</span>
+        <span id="subtotal">₹0.00</span>
+    </div>
+    <div class="summary-line discount">
+        <span>Discount applied:</span>
+        <span id="discount">-₹0.00</span>
+    </div>
+    <div class="summary-line total">
+        <span>Total:</span>
+        <span id="total">₹0.00</span>
+    </div>
+</div>
+
+<script>
+    // Empty array to hold user input items
+    const cart = [];
+
+    function updateCartUI() {
+        const itemListContainer = document.getElementById('itemList');
+        
+        // 1. Render items dynamically using .map()
+        itemListContainer.innerHTML = cart.map((item, index) => `
+            <div class="item">
+                <span>${item.name} (x${item.quantity})</span>
+                <span>₹${(item.price * item.quantity).toFixed(2)}</span>
+            </div>
+        `).join('');
+
+        // 2. Calculate subtotal using .reduce()
+        const subtotal = cart.reduce((accumulator, item) => {
+            return accumulator + (item.price * item.quantity);
+        }, 0);
+
+        // 3. Discount logic: 10% off over ₹500, 15% off over ₹1000
+        let discountRate = 0;
+        if (subtotal > 1000) {
+            discountRate = 0.15;
+        } else if (subtotal > 500) {
+            discountRate = 0.10;
+        }
+
+        const discountAmount = subtotal * discountRate;
+        const finalTotal = subtotal - discountAmount;
+
+        // 4. Update the display with Rupees (₹)
+        document.getElementById('subtotal').textContent = `₹${subtotal.toFixed(2)}`;
+        document.getElementById('discount').textContent = `-₹${discountAmount.toFixed(2)} (${discountRate * 100}%)`;
+        document.getElementById('total').textContent = `₹${finalTotal.toFixed(2)}`;
+    }
+
+    function addItem() {
+        const nameInput = document.getElementById('itemName');
+        const priceInput = document.getElementById('itemPrice');
+        const qtyInput = document.getElementById('itemQty');
+
+        const name = nameInput.value.trim();
+        const price = parseFloat(priceInput.value);
+        const quantity = parseInt(qtyInput.value);
+
+        // Validation check
+        if (!name || isNaN(price) || price <= 0 || isNaN(quantity) || quantity <= 0) {
+            alert("Please enter valid item details.");
+            return;
+        }
+
+        // Push new object data to array
+        cart.push({ name, price, quantity });
+
+        // Clear input form fields
+        nameInput.value = '';
+        priceInput.value = '';
+        qtyInput.value = '1';
+
+        // Refresh calculations
+        updateCartUI();
+    }
+
+    // Initial run on page load
+    updateCartUI();
+</script>
+
+</body>
+</html>
