@@ -1,0 +1,21 @@
+<html>
+<body>
+
+<h2>Theme</h2>
+<button onclick="save()">Dark</button>
+<button onclick="show()">Show</button>
+
+<script>
+function save() {
+ localStorage.theme = "dark";
+ sessionStorage.user = "Student";
+ alert("Saved!");
+}
+
+function show() {
+ alert(localStorage.theme);
+}
+</script>
+
+</body>
+</html>
