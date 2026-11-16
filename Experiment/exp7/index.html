@@ -1,0 +1,22 @@
+<html>
+<body>
+
+<h2>To-Do List</h2>
+<input id="task" placeholder="Enter task">
+<button onclick="add()">Add</button>
+
+<ul id="list"></ul>
+
+<script>
+function add() {
+ let li = document.createElement("li");
+ li.innerHTML = task.value +
+ ' <button onclick="this.parentElement.remove()">Delete</button>';
+
+ list.appendChild(li);
+ task.value = "";
+}
+</script>
+
+</body>
+</html>
