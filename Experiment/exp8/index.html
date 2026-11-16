@@ -1,0 +1,23 @@
+<html>
+<body>
+
+<h2>Gym Admission</h2>
+
+<input id="n" placeholder="Name">
+<input id="a" placeholder="Age">
+<input id="e" placeholder="Email">
+
+<button onclick="check()">Submit</button>
+<p id="out"></p>
+
+<script>
+function check() {
+ if(n.value == "" || a.value < 18 || e.value == "")
+  out.innerHTML = "Invalid Details";
+ else
+  out.innerHTML = "Admission Successful";
+}
+</script>
+
+</body>
+</html>
