@@ -1,0 +1,26 @@
+<html>
+<body>
+
+<h2>Billing Calculator</h2>
+<input id="p" placeholder="Price">
+<input id="q" placeholder="Quantity">
+<button onclick="bill()">Calculate</button>
+<h3 id="out"></h3>
+
+<script>
+var shop = "ABC";
+let tax = 5;
+const discount = 10;
+
+function bill() {
+  let total = (+p.value) * (+q.value);
+  total = total + total * tax / 100;
+  total = total - total * discount / 100;
+
+  let [a, b] = [shop, total];
+  out.innerHTML = `${a} Bill = ₹${b}`;
+}
+</script>
+
+</body>
+</html>
