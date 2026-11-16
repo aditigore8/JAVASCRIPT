@@ -1,0 +1,26 @@
+
+<html>
+<body>
+
+<h2>Student Details</h2>
+<button onclick="show()">Show Data</button>
+<p id="out"></p>
+
+<script>
+let data = [
+ {name:"A", marks:90},
+ {name:"B", marks:85},
+ {name:"C", marks:95}
+];
+
+function show() {
+ let s = "";
+ data.forEach(x => {
+  s += x.name + " - " + x.marks + "<br>";
+ });
+ document.getElementById("out").innerHTML = s;
+}
+</script>
+
+</body>
+</html>
