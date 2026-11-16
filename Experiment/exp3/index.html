@@ -1,0 +1,27 @@
+<html>
+<body>
+
+<h2>Grading System</h2>
+<input id="m" placeholder="Enter Marks">
+<button onclick="grade()">Check</button>
+<h3 id="out"></h3>
+
+<script>
+function grade() {
+  let m = Number(document.getElementById("m").value);
+  let g;
+
+  if (m < 0 || m > 100 || m === "")
+    g = "Invalid Marks";
+  else if (m >= 90) g = "A Grade";
+  else if (m >= 75) g = "B Grade";
+  else if (m >= 60) g = "C Grade";
+  else if (m >= 40) g = "D Grade";
+  else g = "Fail";
+
+  document.getElementById("out").innerHTML = g;
+}
+</script>
+
+</body>
+</html>
